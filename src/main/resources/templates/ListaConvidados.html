@@ -1,32 +1,45 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width" />
-	
-	<link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/> 
-	<link th:href="@{/webjars/bootstrap/css/bootstrap-theme.min.css}" rel="stylesheet"/>
-	<link th:href="@{/webjars/font-awesome/css/fontawesome.min.css}" rel="stylesheet">
-	
-	<body>
-		<div class="panel  panel-default" style="margin: 10px">
-			<div class="panel-heading">
-				<h1 class="title">Lista de Convidados</h1>
-			</div>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+
+<link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"	rel="stylesheet" />
+<link th:href="@{/webjars/bootstrap/css/bootstrap-theme.min.css}" rel="stylesheet" />
+<link th:href="@{/webjars/font-awesome/css/fontawesome.min.css}" rel="stylesheet">
+<body>
+	<div class="panel  panel-default" style="margin: 20px">
+		<div class="panel-heading">
+			<h1 class="title">Lista de Convidados</h1>
+		</div>
+
+		<div class="panel-body">
+
+			<th:block th:include="~{fragments/MensagemSucesso}"></th:block>
 				
-			<div class="panel-body">
-			
-				<form class="form-inline" method="POST" th:object="${convidado}" th:action="@{/convidados}" style="margin:20px 0">
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Nome" th:field="*{nome}"/>
-						<input type="text" class="form-control" placeholder="Acompanhantes" th:field="*{quantidadeAcompanhantes}"/>
-						<button type="submit" class="btn  btn-primary">Adicionar</button>
-					</div>
-			
-				</form>
+			<form class="form-inline" method="POST" th:object="${convidado}" th:action="@{/convidados}" style="margin: 20px 0 50px 0px">
 				
-				<table class="table">
+				<div class="row">
+					<th:block th:include="~{fragments/MensagemErroValidacao}"></th:block>
+				</div>
+				
+				<div class="form-group" th:classappend="${#fields.hasErrors('nome')} ? has-error">
+					<input type="text" class="form-control" id="nome" placeholder="Nome" th:field="*{nome}"  /> 
+				</div>
+				<div class="form-group" th:classappend="${#fields.hasErrors('quantidadeAcompanhantes')} ? has-error">
+					<input type="number" class="form-control" id="quantidadeAcompanhantes" placeholder="Acompanhantes" th:field="*{quantidadeAcompanhantes}" />
+				</div>
+				
+				<button type="submit" class="btn  btn-primary">Adicionar</button>
+
+			</form>
+
+			<div class="table-responsive">
+				<table
+					class="table table-sm table-striped table-hover table-bordered">
 					<thead>
 						<tr>
 							<th>Nome</th>
@@ -40,11 +53,12 @@
 						</tr>
 					</tbody>
 				</table>
-			</div>	
+			</div>
 		</div>
+	</div>
 
-	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>	
-	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script> 
-	</body>	
+	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
 </head>
 </html>
